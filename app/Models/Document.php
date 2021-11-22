@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Advice extends Model
+class Document extends Model
 {
     use HasFactory;
 
@@ -15,4 +15,12 @@ class Advice extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    /**
+     * Get event that related to the document.
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
