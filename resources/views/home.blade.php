@@ -1,6 +1,8 @@
 <x-layouts>
     <x-slot name="title">Home</x-slot>
 
+    <x-slot name="style"></x-slot>
+
     <div class="row">
         <div class="col-md-7 pr-4">
             <h5 class="mb-0">UNIVERSITAS ISLAM NEGERI</h5>

@@ -10,6 +10,13 @@ class Advice extends Model
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'advices';
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array

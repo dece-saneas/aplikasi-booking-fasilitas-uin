@@ -10,12 +10,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome/all.min.css') }}">
-    <!-- fullCalendar -->
-    <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Plugins -->
+    {{ $style }}
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/logo2.png') }}" type="image/x-icon">
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -43,17 +48,36 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('plugins/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- jQuery UI -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Plugins -->
+    {{ $script }}
     <!-- AdminLTE App -->
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
-    <!-- fullCalendar 2.2.5 -->
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
-    <!-- Page specific script -->
-    {{ $script }}
     <!-- Custom Script-->
     <script src="{{ asset('js/script.js') }}"></script>
+    @if(Session::has('success'))
+    <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: '{{Session::get('success')}}'
+            })
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+
+        })
+    </script>
+    @endif
 </body>
 
 </html>

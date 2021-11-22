@@ -15,12 +15,20 @@ class Facility extends Model
      * @var array
      */
     protected $guarded = ['id'];
-    
+
     /**
      * Get the events in the facility.
      */
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Get the units in the facility.
+     */
+    public function units()
+    {
+        return $this->hasMany(FacilityUnit::class);
     }
 }

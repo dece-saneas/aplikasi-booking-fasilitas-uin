@@ -1,56 +1,44 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-layouts.lobby>
+    <x-slot name="title">Login</x-slot>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    <h4 class="login-box-msg">LOGIN</h4>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address / NIM -->
-            <div>
-                <x-label for="login" :value="__('Email / NIM / NIP')" />
-
-                <x-input id="login" class="block mt-1 w-full" type="text" name="login" :value="old('login')" required autofocus />
+    <form action="{{ route('login') }}" method="post">
+        @csrf
+        <div class="input-group mb-3">
+            <input type="text" name="login" value="{{ old('login') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Email / NIM / NIP" required autofocus>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
             </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+            @error('email')
+            <div class="invalid-feedback">
+                {{ $message }}
             </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
+            @enderror
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control @error('email') is-invalid @enderror" placeholder="Password" required autocomplete="current-password">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="icheck-primary">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">
+                        Remember Me
+                    </label>
+                </div>
             </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+        </div>
+    </form>
+
+</x-layouts.lobby>

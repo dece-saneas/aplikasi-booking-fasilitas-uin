@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AdviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +18,16 @@ use App\Http\Controllers\EventController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
+/* 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard'); */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::resource('event', EventController::class);
+Route::resource('jadwal-peminjaman', EventController::class);
+
+
+
+Route::get('/saran', [AdviceController::class, 'create'])->name('saran.create');
+Route::post('/saran', [AdviceController::class, 'store'])->name('saran.store');
