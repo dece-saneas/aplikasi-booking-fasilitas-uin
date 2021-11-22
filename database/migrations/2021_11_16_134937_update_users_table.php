@@ -14,8 +14,9 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('registration_number')->nullable()->unique()->after('id');
+            $table->string('registration_number')->unique()->after('id');
             $table->string('phone')->nullable()->after('name');
+            $table->string('faculty')->nullable()->after('registration_number');
             $table->enum('gender', ['Laki-Laki', 'Perempuan'])->after('phone');
         });
     }
@@ -28,7 +29,7 @@ class UpdateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['nim', 'phone', 'gender']);
+            $table->dropColumn(['registration_number', 'phone', 'faculty', 'gender']);
         });
     }
 }

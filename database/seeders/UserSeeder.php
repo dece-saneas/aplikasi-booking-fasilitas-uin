@@ -16,18 +16,22 @@ class UserSeeder extends Seeder
     {
         $users = [
             'mahasiswa@mail.com' => [
-                'role' => 'Mahasiswa'
+                'role' => 'Mahasiswa',
+                'registration_number' => '0000001'
             ],
             'pengurus@mail.com' => [
-                'role' => 'Pengurus'
+                'role' => 'Pengurus',
+                'registration_number' => '0000002'
             ],
             'admin@mail.com' => [
-                'role' => 'Admin'
+                'role' => 'Admin',
+                'registration_number' => '0000003'
             ],
         ];
 
         foreach ($users as $key => $user) {
             $key = User::create([
+                'registration_number' => $user['registration_number'],
                 'name' => $user['role'],
                 'email' => $key,
                 'password' => bcrypt('password')
