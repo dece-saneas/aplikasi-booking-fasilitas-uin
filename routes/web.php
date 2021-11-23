@@ -17,6 +17,10 @@ use App\Http\Controllers\AdviceController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/fasilitas', [HomeController::class, 'facilityIndex'])->name('facility.index');
+Route::get('/peraturan', [HomeController::class, 'regulationIndex'])->name('regulation.index');
+
+
 
 /* 
 Route::get('/dashboard', function () {
@@ -27,6 +31,7 @@ require __DIR__ . '/auth.php';
 
 Route::resource('jadwal-peminjaman', EventController::class);
 
+Route::get('/jadwal-peminjaman', [EventController::class, 'index'])->name('event.index');
 
 
 Route::get('/saran', [AdviceController::class, 'create'])->name('saran.create');

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Advice;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdviceStoreRequest;
+use App\Models\Advice;
 use App\Models\Facility;
 
 class AdviceController extends Controller
@@ -26,9 +26,7 @@ class AdviceController extends Controller
      */
     public function create()
     {
-        $facilities = Facility::all();
-
-        return view('pages.advice-create', compact('facilities'));
+        return view('pages.advice-create', ['facilities' => Facility::all()]);
     }
 
     /**

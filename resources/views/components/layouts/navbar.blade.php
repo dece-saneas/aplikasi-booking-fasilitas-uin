@@ -12,13 +12,13 @@
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Fasilitas</a>
+                    <a class="nav-link" href="{{ route('facility.index') }}">Fasilitas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Daftar Peminjaman</a>
+                    <a class="nav-link" href="{{ route('event.index') }}">Daftar Peminjaman</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Peraturan</a>
+                    <a class="nav-link" href="{{ route('regulation.index') }}">Peraturan</a>
                 </li>
                 @guest
                 <li class="nav-item">
@@ -26,15 +26,15 @@
                 </li>
                 @else
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                         {{ Auth::user()->name }}
                         <i class="fas fa-user-circle ml-2"></i>
                     </a>
                     <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                         <h6 class="dropdown-header"><strong>{{ Auth::user()->registration_number }}</strong></h6>
-                        @role('Mahasiswa')
-                        <h6 class="dropdown-header pt-0" href="#"><small>{{ Auth::user()->faculty }}</small></h6>
-                        @endrole
+                        @if( Auth::user()->hasRole('Mahasiswa') && Auth::user()->faculty )
+                        <h6 class="dropdown-header pt-0"><small>{{ Auth::user()->faculty }}</small></h6>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
