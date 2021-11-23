@@ -15,4 +15,12 @@ class FacilityUnit extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    /**
+     * Get facility that related to the unit.
+     */
+    public function facility()
+    {
+        return $this->belongsTo(Facility::class);
+    }
 }

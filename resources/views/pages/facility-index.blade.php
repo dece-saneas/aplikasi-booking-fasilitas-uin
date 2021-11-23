@@ -6,6 +6,79 @@
         <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     </x-slot>
 
+    @role('Pengurus')
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-right">
+                    <h3 class="card-title">Daftar Fasilitas</h3>
+                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus mr-2"></i>Tambah</button>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 10px">#</th>
+                                <th>Nama</th>
+                                <th class="text-center" style="width: 40px"><i class="fas fa-ellipsis-v"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($facilities as $key => $facility)
+                            <tr>
+                                <td class="text-center">{{ $key+1 }}</td>
+                                <td>{{ $facility->name }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-right">
+                    <h3 class="card-title">Daftar Unit</h3>
+                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus mr-2"></i>Tambah</button>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 10px">#</th>
+                                <th>Nama</th>
+                                <th class="text-center" style="width: 40px"><i class="fas fa-ellipsis-v"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($units as $key => $unit)
+                            <tr>
+                                <td class="align-middle text-center">{{ $key+1 }}</td>
+                                <td class="align-middle">{{ $unit->name }} <br> <small>{{ $unit->facility->name }}</small></td>
+                                <td class="align-middle text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @else
+
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -43,9 +116,16 @@
             </div>
         </div>
     </div>
+    @endrole
 
     <x-slot name="script">
         <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+        @role('Pengurus')
+
+
+
+        @else
+
         <script>
             $(document).ready(function() {
 
@@ -97,6 +177,7 @@
                 });
             })
         </script>
+        @endrole
     </x-slot>
 
 </x-layouts>
