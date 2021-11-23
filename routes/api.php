@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('fetch-units', [FacilityController::class, 'fetchUnit'])->name('api.fetch-units');
+Route::post('fetch-data-unit', [FacilityController::class, 'fetchDataUnit'])->name('api.fetch-data-unit');

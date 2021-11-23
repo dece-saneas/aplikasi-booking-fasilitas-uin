@@ -21,6 +21,18 @@ class FacilityController extends Controller
     }
 
     /**
+     * Get the units by given facility ID.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchDataUnit(Request $request)
+    {
+        $data['unit'] = FacilityUnit::findOrFail($request->unit_id);
+
+        return response()->json($data);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
