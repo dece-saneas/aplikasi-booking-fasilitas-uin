@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +15,5 @@ use App\Http\Controllers\FacilityController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('fetch-units', [FacilityController::class, 'fetchUnit'])->name('api.fetch-units');
-Route::post('fetch-data-unit', [FacilityController::class, 'fetchDataUnit'])->name('api.fetch-data-unit');
+Route::post('fetch-units', [ApiController::class, 'fetchUnit'])->name('api.fetch-units');
+Route::post('fetch-data-unit', [ApiController::class, 'fetchDataUnit'])->name('api.fetch-data-unit');

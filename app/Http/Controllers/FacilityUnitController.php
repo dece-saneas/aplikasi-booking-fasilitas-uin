@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\AdviceStoreRequest;
-use App\Models\Advice;
 use App\Models\Facility;
+use App\Models\FacilityUnit;
+use File;
 
-class AdviceController extends Controller
+class FacilityUnitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class AdviceController extends Controller
      */
     public function index()
     {
-        return view('pages.advice-create');
+        //
     }
 
     /**
@@ -26,7 +26,7 @@ class AdviceController extends Controller
      */
     public function create()
     {
-        return view('pages.advice-create', ['facilities' => Facility::all()]);
+        //
     }
 
     /**
@@ -35,20 +35,18 @@ class AdviceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdviceStoreRequest $request)
+    public function store(Request $request)
     {
-        Advice::create($request->validated());
-
-        return back()->withSuccess('Terimakasih, saran kamu telah kami terima.');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Advice  $advice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Advice $advice)
+    public function show(FacilityUnit $unit)
     {
         //
     }
@@ -56,10 +54,10 @@ class AdviceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Advice  $advice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Advice $advice)
+    public function edit(FacilityUnit $unit)
     {
         //
     }
@@ -68,10 +66,10 @@ class AdviceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Advice  $advice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Advice $advice)
+    public function update(Request $request, FacilityUnit $unit)
     {
         //
     }
@@ -79,11 +77,19 @@ class AdviceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Advice  $advice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Advice $advice)
+    public function destroy(Facility $fasilitas, FacilityUnit $unit)
     {
-        //
+
+        if (File::exists(public_path('img/facilities/' . $unit->photo))) {
+
+            File::delete(public_path('img/facilities/' . $unit->photo));
+        }
+
+        $unit->delete();
+
+        return back()->withSuccess('Data berhasil di hapus.');
     }
 }

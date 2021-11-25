@@ -12,10 +12,10 @@
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('facility.index') }}">Fasilitas</a>
+                    <a class="nav-link" href="{{ route('fasilitas.index') }}">Fasilitas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('event.index') }}">Daftar Peminjaman</a>
+                    <a class="nav-link" href="#">Daftar Peminjaman</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('regulation.index') }}">Peraturan</a>

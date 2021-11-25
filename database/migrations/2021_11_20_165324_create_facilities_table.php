@@ -24,7 +24,7 @@ class CreateFacilitiesTable extends Migration
             $table->string('name');
             $table->string('photo');
             $table->text('description');
-            $table->foreignId('facility_id')->constrained();
+            $table->foreignId('facility_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

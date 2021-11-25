@@ -17,7 +17,7 @@ class CreateAdvicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->foreignId('facility_unit_id')->constrained();
+            $table->foreignId('facility_unit_id')->constrained()->cascadeOnDelete();
             $table->text('advice');
             $table->timestamps();
         });

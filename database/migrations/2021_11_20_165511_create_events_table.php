@@ -18,13 +18,13 @@ class CreateEventsTable extends Migration
             $table->string('code');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('facility_unit_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('facility_unit_id')->nullable()->constrained()->nullOnDelete();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->enum('type', ['Public', 'Campus']);
             $table->enum('status', ['Waiting', 'Approved', 'Rejected']);
-            $table->foreignId('approved_by')->constrained('users');
+            $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\AdviceController;
+use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\FacilityUnitController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,23 +17,27 @@ use App\Http\Controllers\AdviceController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/fasilitas', [HomeController::class, 'facilityIndex'])->name('facility.index');
-Route::get('/peraturan', [HomeController::class, 'regulationIndex'])->name('regulation.index');
-
-
-
-/* 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard'); */
-
 require __DIR__ . '/auth.php';
 
+Route::view('/', 'home')->name('home');
+Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
+
+Route::middleware(['guest'])->group(function () {
+    Route::resource('saran', AdviceController::class);
+});
+
+Route::middleware(['auth', 'role:Pengurus'])->group(function () {
+    Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->except('index');
+    Route::resource('fasilitas.unit', FacilityUnitController::class)->parameters(['fasilitas' => 'fasilitas'])->except('index');
+});
+
+Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->only('index');
+Route::resource('fasilitas.unit', FacilityUnitController::class)->parameters(['fasilitas' => 'fasilitas'])->only('index');
+
+
+
+
+
+
+
 Route::resource('jadwal-peminjaman', EventController::class);
-
-Route::get('/jadwal-peminjaman', [EventController::class, 'index'])->name('event.index');
-
-
-Route::get('/saran', [AdviceController::class, 'create'])->name('saran.create');
-Route::post('/saran', [AdviceController::class, 'store'])->name('saran.store');

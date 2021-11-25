@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header text-right">
                     <h3 class="card-title">Daftar Fasilitas</h3>
-                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus mr-2"></i>Tambah</button>
+                    <a href="{{ route('fasilitas.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus mr-2"></i>Tambah</a>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-striped">
@@ -30,10 +30,14 @@
                                 <td class="text-center">{{ $key+1 }}</td>
                                 <td>{{ $facility->name }}</td>
                                 <td class="text-center">
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                    </div>
+                                    <form action="{{ route('fasilitas.destroy', $facility->id) }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -44,9 +48,17 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header text-right">
-                    <h3 class="card-title">Daftar Unit</h3>
-                    <button class="btn btn-primary btn-sm"><i class="fas fa-plus mr-2"></i>Tambah</button>
+                <div class="card-header">
+                    <div class="input-group">
+                        <select class="custom-select select" id="select-facility-create-unit">
+                            @foreach($facilities as $facility)
+                            <option value="{{ $facility->id }}">{{ $facility->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="input-group-append">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-create-unit"><i class="fas fa-plus mr-2"></i>Tambah Unit</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-striped">
@@ -63,10 +75,14 @@
                                 <td class="align-middle text-center">{{ $key+1 }}</td>
                                 <td class="align-middle">{{ $unit->name }} <br> <small>{{ $unit->facility->name }}</small></td>
                                 <td class="align-middle text-center">
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                    </div>
+                                    <form action="{{ route('fasilitas.unit.destroy', [$unit->facility_id, $unit->id]) }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-light"><i class="fas fa-edit"></i></button>
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -107,7 +123,7 @@
         <div class="card-body unit-show d-none">
             <div class="row">
                 <div class="col-md-5">
-                    <img alt="image" class="w-100 rounded" id="unit-photo">
+                    <img class="w-100 rounded" id="unit-photo">
                 </div>
                 <div class="col-md-7 px-4">
                     <h2 class="mb-4" id="unit-title"></h2>
@@ -120,12 +136,6 @@
 
     <x-slot name="script">
         <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-        @role('Pengurus')
-
-
-
-        @else
-
         <script>
             $(document).ready(function() {
 
@@ -172,12 +182,21 @@
                             $('#unit-title').text(result.unit.name);
                             $('#unit-desc').text(result.unit.description);
                             $('#unit-photo').attr("src", '{{ asset("img/facilities") }}/' + result.unit.photo);
+                            $('#unit-photo').attr("alt", result.unit.photo);
                         }
                     });
                 });
+
+                // create unit
+                $('.btn-create-unit').on('click', function() {
+                    var facilityID = $('#select-facility-create-unit').val();
+
+                    var url = '{{route("fasilitas.unit.create", ":id")}}';
+                    url = url.replace(':id', facilityID);
+                    window.location.href=url;
+                });
             })
         </script>
-        @endrole
     </x-slot>
 
 </x-layouts>

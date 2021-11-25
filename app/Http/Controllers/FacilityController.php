@@ -9,37 +9,16 @@ use App\Models\FacilityUnit;
 class FacilityController extends Controller
 {
     /**
-     * Get the units by given facility ID.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetchUnit(Request $request)
-    {
-        $data['units'] = FacilityUnit::where("facility_id", $request->facility_id)->get(["name", "id"]);
-
-        return response()->json($data);
-    }
-
-    /**
-     * Get the units by given facility ID.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetchDataUnit(Request $request)
-    {
-        $data['unit'] = FacilityUnit::findOrFail($request->unit_id);
-
-        return response()->json($data);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $facilities = Facility::all();
+        $units = FacilityUnit::orderBy('facility_id')->get();
+
+        return view('pages.facility-index', compact(['facilities', 'units']));
     }
 
     /**
@@ -69,7 +48,7 @@ class FacilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Facility $fasilitas)
     {
         //
     }
@@ -80,7 +59,7 @@ class FacilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Facility $fasilitas)
     {
         //
     }
@@ -92,7 +71,7 @@ class FacilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Facility $fasilitas)
     {
         //
     }
@@ -103,8 +82,10 @@ class FacilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Facility $fasilitas)
     {
-        //
+        $fasilitas->delete();
+
+        return back()->withSuccess('Data berhasil di hapus.');
     }
 }
