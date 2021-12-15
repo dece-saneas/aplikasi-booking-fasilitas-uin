@@ -1,3 +1,7 @@
+body, html {
+    color: #237fc8;
+}
+
 .content-wrapper {
     padding: 12em 0 4em 0;
 }
@@ -22,6 +26,8 @@
 
 .nav-btn {
     margin: .35em 0 0 1rem;
+    border-radius: 80px;
+    padding: 0.25rem 1rem;
 }
 
 @media (max-width: 991px) {
@@ -71,4 +77,9 @@ body.login-page .main-footer {
 
 .select2-drop-active{
     margin-top: -25px;
+}
+
+.img-profile {
+    height: 40px;
+    border: 1px solid white;
 }

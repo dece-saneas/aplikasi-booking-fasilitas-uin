@@ -8,14 +8,17 @@
             <div class="row">
                 <div class="col-md-7 pr-4">
                     <h5 class="mb-0">UNIVERSITAS ISLAM NEGERI</h5>
-                    <h4 class="mb-4"><strong>SYARIF HIDAYATULLAH JAKARTA</strong></h4>
-                    <h6 class="mb-4">Universitas Islam Negeri Syarif Hidayatullah Jakarta atau UIN Jakarta ( Sebelumnya bernama IAIN Syarif Hidayatullah atau IAIN )</h6>
-                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                    <p class="text-muted">
-                        Jl. Ir H. Juanda No.95, Cemp. Putih, Kec. Ciputat Tim., Kota Tangerang Selatan, Banten 15412, 6°18'23.8"S 106°45'16.4"E
-                    </p>
-                    <strong><i class="fas fa-globe-asia mr-1"></i> Website</strong>
-                    <p class="text-muted"><a href="">www.uinjkt.ac.id</a></p>
+                    <h4 class="mb-2"><strong>SYARIF HIDAYATULLAH JAKARTA</strong></h4>
+
+                    <h6 class="mb-0">Universitas Islam Negeri Syarif Hidayatullah Jakarta atau UIN Jakarta</h6>
+                    <p class="mb-4">( Sebelumnya bernama IAIN Syarif Hidayatullah atau IAIN )</p>
+                    <hr>
+
+                    <span class="mb-0"><strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong></span>
+                    <p class="text-muted"><a href="https://www.google.com/maps/place/-6.306611,106.754556">Jl. Ir H. Juanda No.95, Cemp. Putih, Kec. Ciputat Tim., Kota Tangerang Selatan, Banten 15412</a></p>
+
+                    <span class="mb-0"><strong><i class="fas fa-globe-asia mr-1"></i> Website</strong></span>
+                    <p class="text-muted"><a href="https://www.uinjkt.ac.id">www.uinjkt.ac.id</a></p>
                 </div>
                 <div class="col-md-5">
                     <img src="{{ asset('img/uin-signage.jpg') }}" alt="uin-signage.jpg" class="img-fluid rounded">
