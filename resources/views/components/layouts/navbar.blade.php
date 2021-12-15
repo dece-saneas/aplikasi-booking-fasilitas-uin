@@ -11,15 +11,8 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('fasilitas.index') }}">Fasilitas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Daftar Peminjaman</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('regulation.index') }}">Peraturan</a>
-                </li>
+
+                <!-- Profile & Login -->
                 @guest
                 <li class="nav-item">
                     <a class="btn btn-sm btn-outline-light nav-btn" href="{{ route('login') }}">Login</a>
@@ -43,6 +36,7 @@
                     </div>
                 </li>
                 @endguest
+
             </ul>
         </div>
     </div>

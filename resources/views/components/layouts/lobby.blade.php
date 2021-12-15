@@ -33,9 +33,8 @@
         </div>
     </div>
 
-    <footer class="main-footer text-center">
-        <strong>Copyright &copy; 2021 - <a href="#">UIN Syarif Hidayatullah Jakarta</a></strong>
-    </footer>
+    <!-- Main Footer -->
+    <x-layouts.footer></x-layouts.footer>
 
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

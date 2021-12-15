@@ -19,12 +19,14 @@ use App\Http\Controllers\EventController;
 
 require __DIR__ . '/auth.php';
 
+Route::middleware(['guest'])->group(function () {
+    Route::resource('saran', AdviceController::class)->except(['edit', 'update', 'destroy']);
+});
+
 Route::view('/', 'home')->name('home');
 Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
 
-Route::middleware(['guest'])->group(function () {
-    Route::resource('saran', AdviceController::class);
-});
+
 
 Route::middleware(['auth', 'role:Pengurus'])->group(function () {
     Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->except('index');

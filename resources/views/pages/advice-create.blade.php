@@ -9,7 +9,7 @@
 
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">Saran</h3>
+            <h3 class="card-title"><i class="far fa-comment-alt mr-2"></i>Saran</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('saran.store') }}" method="POST">
@@ -95,7 +95,6 @@
                 $('#summernote').summernote({
                     height: 100,
                 })
-
 
                 // Fetch Unit
                 $('#select-facility').on('change', function() {

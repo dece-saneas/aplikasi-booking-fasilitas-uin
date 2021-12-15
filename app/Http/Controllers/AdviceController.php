@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\AdviceStoreRequest;
 use App\Models\Advice;
 use App\Models\Facility;
@@ -16,7 +15,7 @@ class AdviceController extends Controller
      */
     public function index()
     {
-        return view('pages.advice-create');
+        //;
     }
 
     /**
@@ -49,40 +48,6 @@ class AdviceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Advice $advice)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Advice  $advice
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Advice $advice)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Advice  $advice
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Advice $advice)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Advice  $advice
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Advice $advice)
     {
         //
     }

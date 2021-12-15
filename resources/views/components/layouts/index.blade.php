@@ -68,13 +68,8 @@
 
             Toast.fire({
                 icon: 'success',
-                title: '{{Session::get('success')}}'
-            })
-
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
-
+                title: '{{Session::get("success")}}'
+            });
         })
     </script>
     @endif
