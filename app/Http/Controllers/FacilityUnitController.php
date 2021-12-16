@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FacilityUnitStoreRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
 use File;
@@ -26,7 +27,9 @@ class FacilityUnitController extends Controller
      */
     public function create()
     {
-        //
+        $facilities = Facility::all();
+
+        return view('pages.unit-create', compact(['facilities']));
     }
 
     /**
@@ -35,9 +38,14 @@ class FacilityUnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FacilityUnitStoreRequest $request)
     {
-        //
+        $photo = $request->file('photo');
+        $photo->move('img/facilities', $photo->getClientOriginalName());
+
+        FacilityUnit::create(array_merge($request->validated(), ['photo' => $photo->getClientOriginalName()]));
+
+        return back()->withSuccess('Unit berhasil ditambahkan.');
     }
 
     /**

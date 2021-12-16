@@ -23,6 +23,21 @@ Route::middleware(['guest'])->group(function () {
     Route::resource('saran', AdviceController::class)->except(['edit', 'update', 'destroy']);
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store']);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 Route::view('/', 'home')->name('home');
 Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
 
