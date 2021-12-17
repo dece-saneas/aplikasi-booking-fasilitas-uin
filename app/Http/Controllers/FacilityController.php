@@ -16,7 +16,7 @@ class FacilityController extends Controller
     public function index()
     {
         $facilities = Facility::all();
-        $units = FacilityUnit::orderBy('facility_id')->get();
+        $units = FacilityUnit::with(['facility'])->orderBy('facility_id')->get();
 
         return view('pages.facility-index', compact(['facilities', 'units']));
     }

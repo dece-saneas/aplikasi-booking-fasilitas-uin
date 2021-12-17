@@ -56,7 +56,11 @@
     <script src="{{ asset('js/adminlte.min.js') }}"></script>
     <!-- Custom Script-->
     <script src="{{ asset('js/script.js') }}"></script>
-    @if(Session::has('success'))
+
+    @php $flash = ['success', 'error', 'info']; @endphp
+
+    @foreach($flash as $type)
+    @if(Session::has($type))
     <script>
         $(document).ready(function() {
             var Toast = Swal.mixin({
@@ -67,12 +71,13 @@
             });
 
             Toast.fire({
-                icon: 'success',
-                title: '{{Session::get("success")}}'
+                icon: '{{ $type }}',
+                title: '{{ Session::get($type)  }}'
             });
         })
     </script>
     @endif
+    @endforeach
 </body>
 
 </html>

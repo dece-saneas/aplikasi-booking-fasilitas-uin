@@ -29,7 +29,9 @@ class FacilityUnitController extends Controller
     {
         $facilities = Facility::all();
 
-        return view('pages.unit-create', compact(['facilities']));
+        if (count($facilities) >= 1) return view('pages.unit-create', compact(['facilities']));
+
+        return back()->with('info', 'Maaf, belum ada fasilitas yang tersedia.');
     }
 
     /**
