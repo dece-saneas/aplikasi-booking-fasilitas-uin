@@ -19,24 +19,32 @@
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Foto</th>
+                        <th width="5%">No</th>
+                        <th width="15%" class="text-center">Foto</th>
                         <th>Fasilitas</th>
                         <th>Unit</th>
-                        <th>Keterangan</th>
-                        <th>Pengaturan</th>
+                        <th class="text-center">Pengaturan</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if(count($units) !== 0)
                     @foreach($units as $key => $unit)
                     <tr>
-                        <td>{{ $key+1 }}</td>
-                        <td>{{ $unit->photo }}</td>
-                        <td>{{ $unit->facility->name }}</td>
-                        <td>{{ $unit->name }}</td>
-                        <td>{{ $unit->description }}</td>
-                        <td><button class="btn btn-primary"></button>Edit</td>
+                        <td class="align-middle">{{ $key+1+((($units->currentPage()-1)*10)) }}</td>
+                        <td>
+                            <img class="img-fluid img-thumbnail" src="{{ asset('img/facilities/'.$unit->photo) }}" alt="unit-photo" onerror="this.src='img/photo-placeholder.jpg'">
+                        </td>
+                        <td class="align-middle">{{ $unit->facility->name }}</td>
+                        <td class="align-middle">{{ $unit->name }}</td>
+                        <td class="text-center align-middle">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">Atur</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item text-muted" href="#"><i class="fas fa-edit mr-2"></i>Edit</a>
+                                    <a class="dropdown-item text-muted" href="#"><i class="fas fa-trash-alt mr-2"></i>Hapus</a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                     @else
@@ -46,6 +54,9 @@
                     @endif
                 </tbody>
             </table>
+        </div>
+        <div class="card-body">
+            {{ $units->links('layouts.pagination') }}
         </div>
     </div>
 

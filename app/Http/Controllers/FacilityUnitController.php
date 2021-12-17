@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FacilityUnitStoreRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
-use File;
+use Intervention\Image\Facades\Image;
+use Illuminate\Http\File;
 
 class FacilityUnitController extends Controller
 {
@@ -42,12 +43,15 @@ class FacilityUnitController extends Controller
      */
     public function store(FacilityUnitStoreRequest $request)
     {
-        $photo = $request->file('photo');
-        $photo->move('img/facilities', $photo->getClientOriginalName());
+        $image = $request->file('photo');
+        $input['file'] = time() . '.' . $image->getClientOriginalExtension();
 
-        FacilityUnit::create(array_merge($request->validated(), ['photo' => $photo->getClientOriginalName()]));
+        $imgFile = Image::make($image->getRealPath());
+        $imgFile->resize(1024, 768)->save(public_path('/img/facilities/' . $input['file']));
 
-        return back()->withSuccess('Unit berhasil ditambahkan.');
+        FacilityUnit::create(array_merge($request->validated(), ['photo' => $input['file']]));
+
+        return redirect()->route('fasilitas.index')->withSuccess('Unit berhasil ditambahkan.');
     }
 
     /**
