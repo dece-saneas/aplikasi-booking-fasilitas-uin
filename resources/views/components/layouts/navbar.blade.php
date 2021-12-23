@@ -21,7 +21,7 @@
                     <a class="btn btn-sm btn-light nav-btn btn-login" href="{{ route('login') }}">Login</a>
                 </li>
                 @else
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown ml-lg-4 mt-4 mt-lg-0">
                     <a href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('img/profile-placeholder.jpg') }}" alt="img-profile" class="img-profile img-circle" style="opacity: .8">
                     </a>

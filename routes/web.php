@@ -24,7 +24,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store']);
+    Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
     Route::resource('fasilitas', FacilityController::class)->only(['index']);
 });
 

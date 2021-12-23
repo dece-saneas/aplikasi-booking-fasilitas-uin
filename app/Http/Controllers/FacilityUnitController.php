@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\FacilityUnitStoreRequest;
+use App\Http\Requests\FacilityUnitUpdateRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
 use Intervention\Image\Facades\Image;
-use Illuminate\Http\File;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class FacilityUnitController extends Controller
 {
@@ -28,11 +30,9 @@ class FacilityUnitController extends Controller
      */
     public function create()
     {
-        $facilities = Facility::all();
+        if (Facility::count() == 0) return back()->with('info', 'Maaf, belum ada fasilitas yang tersedia.');
 
-        if (count($facilities) >= 1) return view('pages.unit-create', compact(['facilities']));
-
-        return back()->with('info', 'Maaf, belum ada fasilitas yang tersedia.');
+        return view('pages.unit-create', ['facilities' => Facility::all()]);
     }
 
     /**
@@ -44,7 +44,7 @@ class FacilityUnitController extends Controller
     public function store(FacilityUnitStoreRequest $request)
     {
         $image = $request->file('photo');
-        $input['file'] = time() . '.' . $image->getClientOriginalExtension();
+        $input['file'] = Str::random(64) . '.' . $image->getClientOriginalExtension();
 
         $imgFile = Image::make($image->getRealPath());
         $imgFile->resize(1024, 768)->save(public_path('/img/facilities/' . $input['file']));
@@ -73,7 +73,7 @@ class FacilityUnitController extends Controller
      */
     public function edit(FacilityUnit $unit)
     {
-        //
+        return view('pages.unit-edit', ['unit' => $unit, 'facilities' => Facility::all()]);
     }
 
     /**
@@ -83,9 +83,20 @@ class FacilityUnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FacilityUnit $unit)
+    public function update(FacilityUnitUpdateRequest $request, FacilityUnit $unit)
     {
-        //
+        if ($request->hasFile('photo')) {
+
+            $image = $request->file('photo');
+
+            $imgFile = Image::make($image->getRealPath());
+
+            $imgFile->resize(1024, 768)->save(public_path('/img/facilities/' . $unit->photo));
+        }
+
+        $unit->update(array_merge($request->validated(), ['photo' => $unit->photo]));
+
+        return redirect()->route('fasilitas.index')->withSuccess('Data Unit berhasil diperbarui.');
     }
 
     /**
@@ -94,7 +105,7 @@ class FacilityUnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Facility $fasilitas, FacilityUnit $unit)
+    public function destroy(FacilityUnit $unit)
     {
 
         if (File::exists(public_path('img/facilities/' . $unit->photo))) {
@@ -104,6 +115,6 @@ class FacilityUnitController extends Controller
 
         $unit->delete();
 
-        return back()->withSuccess('Data berhasil di hapus.');
+        return back()->withSuccess('Unit berhasil di hapus.');
     }
 }
