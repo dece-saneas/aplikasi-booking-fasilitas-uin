@@ -3,6 +3,30 @@
 
     <x-slot name="style"></x-slot>
 
+    <div class="modal fade" id="facilityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h5 class="m-0"><strong>Pengaturan Fasilitas</strong></h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('fasilitas.index') }}" method="POST">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="@error('name') {{ $message }} @else Tambah Fasilitas @enderror" id="name" name="name">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn @error('name') btn-danger @else btn-primary @enderror">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card card-default">
         <div class="card-header">
             <div class="row">
@@ -10,7 +34,7 @@
                     <h4 class="m-0"><strong>Fasilitas</strong></h4>
                 </div>
                 <div class="col-md-6 text-md-right">
-                    <button class="btn btn-sm btn-primary mr-md-2 mb-2 m-md-0">Pengaturan Fasilitas</button>
+                    <button type="button" class="btn btn-sm btn-primary mr-md-2 mb-2 m-md-0" data-toggle="modal" data-target="#facilityModal">Pengaturan Fasilitas</button>
                     <a href="{{ route('units.create') }}" class="btn btn-sm btn-primary mb-2 mb-md-0"><i class="fas fa-plus mr-2"></i>Tambah Unit</a>
                 </div>
             </div>

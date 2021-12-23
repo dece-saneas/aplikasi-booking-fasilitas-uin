@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\FacilityUnitStoreRequest;
 use App\Http\Requests\FacilityUnitUpdateRequest;
 use App\Models\Facility;

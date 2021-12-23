@@ -7,6 +7,16 @@
         <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
     </x-slot>
 
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{{ asset('img/photo-placeholder.jpg') }}" alt="unit-photo" class="img-fluid" id="imgView">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card card-default">
         <div class="card-header text-center">
             <h4 class="m-0"><strong>Tambah Unit</strong></h4>
@@ -29,9 +39,14 @@
                     </div>
                     <div class="col-md-4">
                         <label>Photo Unit</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" name="photo">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#previewModal"><i class="fas fa-search-plus mr-2"></i>Preview</button>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" name="photo" id="inputPhoto">
+                                <label class="custom-file-label" for="inputPhoto">Choose file</label>
+                            </div>
                         </div>
                         @error('photo')
                         <small class="form-text text-danger m-0">{{ $message }}</small>
@@ -75,6 +90,22 @@
                 $('#summernote').summernote({
                     height: 200,
                 })
+
+                $("#inputPhoto").change(function(event) {
+                    if (this.files && this.files[0]) {
+                        var reader = new FileReader();
+                        var filename = $("#inputPhoto").val();
+                        filename = filename.substring(filename.lastIndexOf('\\') + 1);
+                        reader.onload = function(e) {
+                            debugger;
+                            $('#imgView').attr('src', e.target.result);
+                            $('#imgView').hide();
+                            $('#imgView').fadeIn(500);
+                            $('.custom-file-label').text(filename);
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
             })
         </script>
     </x-slot>

@@ -19,43 +19,17 @@ use App\Http\Controllers\EventController;
 
 require __DIR__ . '/auth.php';
 
+Route::view('/', 'home')->name('home');
+Route::resource('fasilitas', FacilityController::class)->only(['index']);
+Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
+
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:Admin')->group(function () {
+        Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('fasilitas', FacilityController::class)->only(['store']);
+    });
+});
+
 Route::middleware(['guest'])->group(function () {
     Route::resource('saran', AdviceController::class)->except(['edit', 'update', 'destroy']);
 });
-
-Route::middleware(['auth'])->group(function () {
-    Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-    Route::resource('fasilitas', FacilityController::class)->only(['index']);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-Route::view('/', 'home')->name('home');
-Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
-
-
-
-Route::middleware(['auth', 'role:Pengurus'])->group(function () {
-    Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->except('index');
-    Route::resource('fasilitas.unit', FacilityUnitController::class)->parameters(['fasilitas' => 'fasilitas'])->except('index');
-});
-
-Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->only('index');
-Route::resource('fasilitas.unit', FacilityUnitController::class)->parameters(['fasilitas' => 'fasilitas'])->only('index');
-
-
-
-
-
-
-
-Route::resource('jadwal-peminjaman', EventController::class);

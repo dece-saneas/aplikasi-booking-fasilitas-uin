@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FacilityStoreRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
 
@@ -37,9 +38,11 @@ class FacilityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FacilityStoreRequest $request)
     {
-        //
+        Facility::create($request->validated());
+
+        return redirect()->route('fasilitas.index')->withSuccess('Fasilitas berhasil ditambahkan.');
     }
 
     /**
