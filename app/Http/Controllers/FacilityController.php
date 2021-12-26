@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\FacilityStoreRequest;
+use App\Http\Requests\FacilityUpdateRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
 
@@ -74,9 +75,11 @@ class FacilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Facility $fasilitas)
+    public function update(FacilityUpdateRequest $request, Facility $fasilitas)
     {
-        //
+        $fasilitas->update($request->validated());
+
+        return redirect()->route('fasilitas.index')->withSuccess('Data Fasilitas berhasil diperbarui.');
     }
 
     /**
@@ -89,6 +92,6 @@ class FacilityController extends Controller
     {
         $fasilitas->delete();
 
-        return back()->withSuccess('Data berhasil di hapus.');
+        return back()->withSuccess('Data fasilitas berhasil di hapus.');
     }
 }

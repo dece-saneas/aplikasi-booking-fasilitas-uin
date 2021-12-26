@@ -26,10 +26,10 @@ Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
 Route::middleware('auth')->group(function () {
     Route::middleware('role:Admin')->group(function () {
         Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-        Route::resource('fasilitas', FacilityController::class)->only(['store']);
+        Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->only(['store', 'destroy', 'update']);
     });
 });
 
 Route::middleware(['guest'])->group(function () {
-    Route::resource('saran', AdviceController::class)->except(['edit', 'update', 'destroy']);
+    Route::resource('saran', AdviceController::class)->except(['edit', 'update']);
 });

@@ -13,16 +13,6 @@ use Illuminate\Support\Str;
 class FacilityUnitController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -51,17 +41,6 @@ class FacilityUnitController extends Controller
         FacilityUnit::create(array_merge($request->validated(), ['photo' => $input['file']]));
 
         return redirect()->route('fasilitas.index')->withSuccess('Unit berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(FacilityUnit $unit)
-    {
-        //
     }
 
     /**

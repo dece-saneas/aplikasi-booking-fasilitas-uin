@@ -9,16 +9,6 @@ use App\Models\Facility;
 class AdviceController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //;
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -39,16 +29,5 @@ class AdviceController extends Controller
         Advice::create($request->validated());
 
         return back()->withSuccess('Terimakasih, saran kamu telah kami terima.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Advice  $advice
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Advice $advice)
-    {
-        //
     }
 }
