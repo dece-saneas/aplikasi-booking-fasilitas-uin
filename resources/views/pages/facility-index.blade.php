@@ -10,8 +10,8 @@
     <div class="modal fade" id="facilityModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body text-center">
-                    <h5 class="m-0"><strong>Pengaturan Fasilitas</strong></h5>
+                <div class="modal-body text-center pb-0">
+                    <h5 class="m-0"><strong>PENGATURAN FASILITAS</strong></h5>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('fasilitas.index') }}" method="POST">
@@ -73,8 +73,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center pt-0">
-                    <h5 class="m-0"><strong>Edit Nama Fasilitas</strong></h5>
+                <div class="modal-body text-center py-0">
+                    <h5 class="m-0"><strong>EDIT NAMA FASILITAS</strong></h5>
                 </div>
                 <div class="modal-body">
                     <form action="javascript:void(0);" id="editFacilityForm" method="POST">
@@ -95,7 +95,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="m-0"><strong>Fasilitas</strong></h4>
+                    <h4 class="m-0"><strong>FASILITAS</strong></h4>
                 </div>
                 <div class="col-md-6 text-md-right">
                     <button type="button" class="btn btn-sm btn-primary mr-md-2 mb-2 m-md-0" data-toggle="modal" href="#facilityModal">Pengaturan Fasilitas</button>
@@ -160,7 +160,7 @@
         <div class="col-md-4">
             <div class="card card-default">
                 <div class="card-header text-center" style="border: none;">
-                    <h4 class="m-0"><strong>Fasilitas</strong></h4>
+                    <h4 class="m-0"><strong>FASILITAS</strong></h4>
                 </div>
                 <div class="card-body">
                     <form>
