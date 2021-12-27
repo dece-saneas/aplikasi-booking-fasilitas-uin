@@ -28,6 +28,8 @@ class ApiController extends Controller
     public function fetchDataUnit(Request $request)
     {
         $data['unit'] = FacilityUnit::findOrFail($request->unit_id);
+        $data['facility'] = $data['unit']->facility;
+
 
         return response()->json($data);
     }

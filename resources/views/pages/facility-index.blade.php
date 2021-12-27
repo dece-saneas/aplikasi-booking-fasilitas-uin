@@ -1,7 +1,10 @@
 <x-layouts>
     <x-slot name="title">Fasilitas</x-slot>
 
-    <x-slot name="style"></x-slot>
+    <x-slot name="style">
+        <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    </x-slot>
 
     @role('Admin')
     <div class="modal fade" id="facilityModal" tabindex="-1" aria-hidden="true">
@@ -152,7 +155,101 @@
     </div>
     @endrole
 
+    @if(Auth::guest() || Auth::user()->hasAnyRole(['Mahasiswa', 'Pengurus']))
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-default">
+                <div class="card-header text-center" style="border: none;">
+                    <h4 class="m-0"><strong>Fasilitas</strong></h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Pilih Fasilitas</label>
+                            <select class="form-control select" id="selectFacility" width="100%">
+                                <option></option>
+                                @foreach($facilities as $facility)
+                                <option value="{{ $facility->id }}">{{ $facility->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Pilih Unit</label>
+                            <select class="form-control select" id="selectUnit" width="100%">
+                                <option></option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card card-default">
+                <div class="card-body">
+                    <img src="{{ asset('img/facilities/'.$units[0]->photo) }}" alt="photo-unit" class="img-fluid rounded" id="photoUnit">
+                    <div class="my-4">
+                        <h4 class="m-0"><strong id="unitName">{{ $units[0]->name }}</strong></h4>
+                        <h6 class="m-0" id="unitFacilityName">{{ $units[0]->facility->name }}</h6>
+                    </div>
+                    <div class="description" id="unitDescription">
+                        {!! $units[0]->description !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <x-slot name="script">
+        <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+        <script>
+            $('.select').select2({
+                placeholder: "Pilih",
+                allowClear: true
+            })
+            $(document).ready(function() {
+                // Fetch Units
+                $('#selectFacility').on('change', function() {
+                    var idFacility = this.value;
+                    $("#selectUnit").html('');
+                    $.ajax({
+                        url: "{{ route('api.fetch-units') }}",
+                        type: "POST",
+                        data: {
+                            facility_id: idFacility,
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            $('#selectUnit').html('<option></option>');
+                            $.each(result.units, function(key, value) {
+                                $("#selectUnit").append('<option value="' + value.id + '">' + value.name + '</option>');
+                            });
+                        }
+                    });
+                });
+
+                // Fetch Unit
+                $('#selectUnit').on('change', function() {
+                    var idUnit = this.value;
+                    $.ajax({
+                        url: "{{ route('api.fetch-data-unit') }}",
+                        type: "POST",
+                        data: {
+                            unit_id: idUnit,
+                            _token: '{{csrf_token()}}'
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            $('#unitName').text(result.unit.name);
+                            $('#unitFacilityName').text(result.facility.name);
+                            $('#unitDescription').html(result.unit.description);
+                            $('#photoUnit').attr("src", '{{ asset("img/facilities") }}/' + result.unit.photo);
+                        }
+                    });
+                });
+            });
+        </script>
         @role('Admin')
         <script>
             $('#editFacilityModal').on('show.bs.modal', function(event) {
