@@ -14,7 +14,17 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = [];
+
+        foreach (Event::all() as $event) {
+            $events[] = [
+                'title' => $event->title,
+                'start' => $event->start,
+                'end' => $event->end,
+            ];
+        }
+
+        return view('pages.event-index', compact('events'));
     }
 
     /**

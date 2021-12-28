@@ -22,6 +22,7 @@ require __DIR__ . '/auth.php';
 Route::view('/', 'home')->name('home');
 Route::resource('fasilitas', FacilityController::class)->only(['index']);
 Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
+Route::resource('jadwal-peminjaman', EventController::class)->only(['index']);
 
 Route::middleware('auth')->group(function () {
     Route::middleware('role:Admin')->group(function () {

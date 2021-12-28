@@ -15,6 +15,9 @@
                     <a class="nav-link" href="{{ route('fasilitas.index') }}">Fasilitas</a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('jadwal-peminjaman.index') }}">Jadwal Peminjaman</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ route('regulation.index') }}">Peraturan</a>
                 </li>
 
