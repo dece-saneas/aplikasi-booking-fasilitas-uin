@@ -25,10 +25,10 @@ class Event extends Model
     }
 
     /**
-     * Get the facility that used on the event.
+     * Get the unitthat used on the event.
      */
-    public function facility()
+    public function unit()
     {
-        return $this->belongsTo(Facility::class);
+        return $this->belongsTo(FacilityUnit::class, 'facility_unit_id');
     }
 }

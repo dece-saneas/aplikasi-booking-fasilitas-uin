@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Models\Facility;
+use App\Models\FacilityUnit;
 
 class EventController extends Controller
 {
@@ -12,24 +14,50 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (request()->ajax()) {
 
-            $events = [];
 
-            foreach (Event::all() as $event) {
-                $events[] = [
-                    'title' => $event->title,
+            $eventsJson = [];
+
+            $unit = FacilityUnit::latest('created_at')->first();
+            $events = Event::where('facility_unit_id', $unit->id)->get();
+
+            if ($request->has('fasilitas')) {
+                $events = Event::where('facility_unit_id', $request->fasilitas)->get();
+            }
+
+            foreach ($events as $event) {
+
+                $bgColor = "";
+                switch ($event->status) {
+                    case "Approved":
+                        $bgColor = "#009f14";
+                        break;
+                    case "Rejected":
+                        $bgColor = "#d42729";
+                        break;
+                    default:
+                        $bgColor = "#feff00";
+                };
+
+                $eventsJson[] = [
+                    'title' => $event->name,
                     'start' => $event->start,
                     'end' => $event->end,
+                    'backgroundColor' => $bgColor,
+                    'url' => route('jadwal-peminjaman.show', $event->id)
                 ];
             }
 
-            return response()->json($events);
+            return response()->json($eventsJson);
         };
 
-        return view('pages.event-index');
+        $facilities = Facility::all();
+        $unit = FacilityUnit::latest('created_at')->first();
+
+        return view('pages.event-index', compact('facilities', 'unit'));
     }
 
     /**
@@ -61,7 +89,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('pages.event-show', compact('event'));
     }
 
     /**
