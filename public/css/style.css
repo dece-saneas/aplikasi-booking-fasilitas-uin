@@ -83,3 +83,25 @@ body.login-page .main-footer {
     height: 40px;
     border: 1px solid white;
 }
+
+/* FullCalendar */
+.fc-day-today {
+    background:#f5f5f5 !important;
+}
+
+.fc-view .table-bordered {
+    border: none;
+}
+
+.fc-view .table-bordered td {
+    border-right: none;
+    border-bottom: none;
+}
+
+.fc-scrollgrid-sync-inner {
+    text-align: end;
+}
+
+.fc-event {
+    text-align: start;
+}
