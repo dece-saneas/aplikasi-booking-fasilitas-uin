@@ -18,7 +18,6 @@ class EventController extends Controller
     {
         if (request()->ajax()) {
 
-
             $eventsJson = [];
 
             $unit = FacilityUnit::latest('created_at')->first();
@@ -33,20 +32,21 @@ class EventController extends Controller
                 $bgColor = "";
                 switch ($event->status) {
                     case "Approved":
-                        $bgColor = "#009f14";
+                        $bgColor = "#28a745";
                         break;
                     case "Rejected":
-                        $bgColor = "#d42729";
+                        $bgColor = "#dc3545";
                         break;
                     default:
-                        $bgColor = "#feff00";
+                        $bgColor = "#ffc107";
                 };
 
                 $eventsJson[] = [
-                    'title' => $event->name,
-                    'start' => $event->start,
-                    'end' => $event->end,
+                    'title' => $event->title,
+                    'start' => $event->start->format('Y-m-d H:i:s'),
+                    'end' => $event->end->format('Y-m-d H:i:s'),
                     'backgroundColor' => $bgColor,
+                    'borderColor' => $bgColor,
                     'url' => route('jadwal-peminjaman.show', $event->id)
                 ];
             }

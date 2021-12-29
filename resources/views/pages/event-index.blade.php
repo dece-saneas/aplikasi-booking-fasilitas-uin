@@ -38,9 +38,9 @@
             <div id="calendar"></div>
         </div>
         <div class="card-body">
-            <h6><i class="fas fa-circle mr-2" style="color: #009f14;"></i>Di Setujui dan Di Izinkan</h6>
-            <h6><i class="fas fa-circle mr-2" style="color: #feff00;"></i>Belum Di Izinkan</h6>
-            <h6><i class="fas fa-circle mr-2" style="color: #d42729;"></i>Tidak Di Izinkan</h6>
+            <h6><i class="fas fa-circle mr-2 text-success"></i>Di Setujui dan Di Izinkan</h6>
+            <h6><i class="fas fa-circle mr-2 text-warning"></i>Belum Di Izinkan</h6>
+            <h6><i class="fas fa-circle mr-2 text-danger"></i>Tidak Di Izinkan</h6>
         </div>
     </div>
 

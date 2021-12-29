@@ -17,6 +17,15 @@ class Event extends Model
     protected $guarded = ['id'];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'start',
+        'end'
+    ];
+    /**
      * Get user that own the event.
      */
     public function user()
