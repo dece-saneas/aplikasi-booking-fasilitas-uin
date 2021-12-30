@@ -7,6 +7,7 @@ use App\Http\Requests\FacilityStoreRequest;
 use App\Http\Requests\FacilityUpdateRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
+use Illuminate\Support\Facades\Auth;
 
 class FacilityController extends Controller
 {
@@ -28,6 +29,9 @@ class FacilityController extends Controller
         $facilities = Facility::all();
         $units = FacilityUnit::with(['facility'])->orderBy('facility_id')->paginate(10);
 
+        if (Auth::guest() || Auth::user()->hasAnyRole(['Mahasiswa', 'Pengurus'])) {
+            if (Facility::count() == 0) return redirect('/')->with('info', 'Maaf, belum ada fasilitas yang tersedia.');
+        }
         return view('pages.facility-index', compact(['facilities', 'units']));
     }
 

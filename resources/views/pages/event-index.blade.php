@@ -17,9 +17,11 @@
                             <label for="exampleInputEmail1">Pilih Fasilitas</label>
                             <select class="form-control select" id="selectFacility" width="100%">
                                 <option></option>
+                                @if(count($facilities) > 0 && $unit)
                                 @foreach($facilities as $facility)
                                 <option value="{{ $facility->id }}" @if($facility->id == $unit->facility->id) selected @endif>{{ $facility->name }}</option>
                                 @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -27,7 +29,11 @@
                         <div class="form-group">
                             <label for="exampleInputPassword1">Pilih Unit</label>
                             <select class="form-control select" id="selectUnit" width="100%">
+                                @if($unit)
                                 <option>{{ $unit->name }}</option>
+                                @else
+                                <option></option>
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -114,7 +120,7 @@
                             right: 'prev,next today'
                         },
                         themeSystem: 'bootstrap',
-                        events: response
+                        events: response,
                     });
 
                     calendar.render();

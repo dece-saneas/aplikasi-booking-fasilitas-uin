@@ -105,3 +105,8 @@ body.login-page .main-footer {
 .fc-event {
     text-align: start;
 }
+
+/* Select 2 */
+.is-invalid .select2-selection, .btn.is-invalid, textarea.is-invalid + .note-editor {
+    border-color: rgb(185, 74, 72) !important;
+}

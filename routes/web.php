@@ -35,7 +35,7 @@ Route::get('jadwal-peminjaman/list', 'App\Http\Controllers\EventController@list'
 
 Route::resource('jadwal-peminjaman', EventController::class)
     ->parameters(['jadwal-peminjaman' => 'event'])
-    ->only(['index', 'create', 'show']);
+    ->except(['edit', 'destroy']);
 
 Route::resource('fasilitas/units', FacilityUnitController::class)
     ->middleware(['auth', 'role:Admin'])

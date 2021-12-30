@@ -4,11 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Http\Requests\EventStoreRequest;
 use App\Models\Facility;
 use App\Models\FacilityUnit;
+use App\Models\Document;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth'], ['except' => ['index']]);
+        $this->middleware(['role:Mahasiswa'], ['only' => ['create', 'store']]);
+        $this->middleware(['role:Mahasiswa|Pengurus'], ['only' => ['show', 'list']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +30,12 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
+
         if (request()->ajax()) {
 
-            $eventsJson = [];
+            if (FacilityUnit::count() == 0) return response()->json(NULL);
 
+            $eventsJson = [];
             $unit = FacilityUnit::latest('created_at')->first();
             $events = Event::where('facility_unit_id', $unit->id)->get();
 
@@ -67,7 +83,10 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('pages.event-create');
+        if (Facility::count() == 0) return back()->with('info', 'Maaf, belum ada fasilitas yang tersedia.');
+
+        $facilities = Facility::all();
+        return view('pages.event-create', compact('facilities'));
     }
 
     /**
@@ -76,9 +95,38 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EventStoreRequest $request)
     {
-        return view('pages.event-create');
+        $period = explode(" s/d ", $request->period);
+
+        $event = Event::create([
+            'code' => 'UIN' . time(),
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => Auth::id(),
+            'facility_unit_id' => $request->facility_unit_id,
+            'start' => $period[0],
+            'end' => $period[1],
+            'type' => $request->type,
+            'status' => "Waiting",
+        ]);
+
+        $ktmFile = $request->file('ktm');
+        $ktmFileName = Str::random(64) . '.' . $ktmFile->getClientOriginalExtension();
+        $ktmFile->move(public_path('files'), $ktmFileName);
+        Document::create(['name' => $ktmFileName, 'event_id' => $event->id]);
+
+        $lampiranFile = $request->file('lampiran');
+        $lampiranFileName = Str::random(64) . '.' . $lampiranFile->getClientOriginalExtension();
+        $lampiranFile->move(public_path('files'), $lampiranFileName);
+        Document::create(['name' => $lampiranFileName, 'event_id' => $event->id]);
+
+        $rundownFile = $request->file('rundown');
+        $rundownFileName = Str::random(64) . '.' . $rundownFile->getClientOriginalExtension();
+        $rundownFile->move(public_path('files'), $rundownFileName);
+        Document::create(['name' => $rundownFileName, 'event_id' => $event->id]);
+
+        return redirect()->route('jadwal-peminjaman.list')->withSuccess('pengajuan berhasil, status pengajuan mu dapat dilihat pada tabel.');
     }
 
     /**
@@ -93,17 +141,6 @@ class EventController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -112,18 +149,18 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
-    }
+        $status = "";
+        switch ($request->type) {
+            case "1":
+                $status = "Approved";
+                break;
+            default:
+                $status = "Rejected";
+        };
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Event $event)
-    {
-        //
+        $event->update(['status' => $status]);
+
+        return back()->withSuccess('Status berhasil di perbarui.');
     }
 
     /**
@@ -133,6 +170,14 @@ class EventController extends Controller
      */
     public function list()
     {
-        return view('pages.event-list');
+        $events = Event::where('status', 'Waiting')->paginate(10);
+        $histories = Event::where('status', '!=', 'Waiting')->paginate(10);
+
+        if (Auth::user()->hasRole('Mahasiswa')) {
+            $events = Event::where('user_id', Auth::id())->where('status', 'Waiting')->paginate(10);
+            $histories = Event::where('user_id', Auth::id())->where('status', '!=', 'Waiting')->paginate(10);
+        };
+
+        return view('pages.event-list', compact('events', 'histories'));
     }
 }
