@@ -19,18 +19,28 @@ use App\Http\Controllers\EventController;
 
 require __DIR__ . '/auth.php';
 
-Route::view('/', 'home')->name('home');
-Route::resource('fasilitas', FacilityController::class)->only(['index']);
-Route::view('peraturan', 'pages.regulation-index')->name('regulation.index');
-Route::resource('jadwal-peminjaman', EventController::class)->parameters(['jadwal-peminjaman' => 'event'])->only(['index', 'show']);
+Route::view('/', 'home')
+    ->name('home');
 
-Route::middleware('auth')->group(function () {
-    Route::middleware('role:Admin')->group(function () {
-        Route::resource('fasilitas/units', FacilityUnitController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-        Route::resource('fasilitas', FacilityController::class)->parameters(['fasilitas' => 'fasilitas'])->only(['store', 'destroy', 'update']);
-    });
-});
+Route::view('peraturan', 'pages.regulation-index')
+    ->name('regulation.index');
 
-Route::middleware(['guest'])->group(function () {
-    Route::resource('saran', AdviceController::class)->except(['edit', 'update']);
-});
+
+Route::resource('fasilitas', FacilityController::class)
+    ->parameters(['fasilitas' => 'fasilitas'])
+    ->except(['create', 'show', 'edit']);
+
+Route::get('jadwal-peminjaman/list', 'App\Http\Controllers\EventController@list')
+    ->name('jadwal-peminjaman.list');
+
+Route::resource('jadwal-peminjaman', EventController::class)
+    ->parameters(['jadwal-peminjaman' => 'event'])
+    ->only(['index', 'create', 'show']);
+
+Route::resource('fasilitas/units', FacilityUnitController::class)
+    ->middleware(['auth', 'role:Admin'])
+    ->except(['index', 'show']);
+
+Route::resource('saran', AdviceController::class)
+    ->middleware('guest')
+    ->only(['create', 'store']);

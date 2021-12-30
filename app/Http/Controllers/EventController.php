@@ -67,7 +67,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.event-create');
     }
 
     /**
@@ -78,7 +78,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('pages.event-create');
     }
 
     /**
@@ -124,5 +124,15 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        return view('pages.event-list');
     }
 }

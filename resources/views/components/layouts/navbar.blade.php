@@ -17,6 +17,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('jadwal-peminjaman.index') }}">Jadwal Peminjaman</a>
                 </li>
+                @hasanyrole('Pengurus|Mahasiswa')
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('jadwal-peminjaman.list') }}">Daftar Pinjam</a>
+                </li>
+                @endhasanyrole
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('regulation.index') }}">Peraturan</a>
                 </li>
