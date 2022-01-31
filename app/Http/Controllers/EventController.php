@@ -112,17 +112,17 @@ class EventController extends Controller
         ]);
 
         $ktmFile = $request->file('ktm');
-        $ktmFileName = Str::random(64) . '.' . $ktmFile->getClientOriginalExtension();
+        $ktmFileName = 'ktm' . Str::random(64) . '.' . $ktmFile->getClientOriginalExtension();
         $ktmFile->move(public_path('files'), $ktmFileName);
         Document::create(['name' => $ktmFileName, 'event_id' => $event->id]);
 
         $lampiranFile = $request->file('lampiran');
-        $lampiranFileName = Str::random(64) . '.' . $lampiranFile->getClientOriginalExtension();
+        $lampiranFileName = 'lampiran' . Str::random(64) . '.' . $lampiranFile->getClientOriginalExtension();
         $lampiranFile->move(public_path('files'), $lampiranFileName);
         Document::create(['name' => $lampiranFileName, 'event_id' => $event->id]);
 
         $rundownFile = $request->file('rundown');
-        $rundownFileName = Str::random(64) . '.' . $rundownFile->getClientOriginalExtension();
+        $rundownFileName = 'rundown' . Str::random(64) . '.' . $rundownFile->getClientOriginalExtension();
         $rundownFile->move(public_path('files'), $rundownFileName);
         Document::create(['name' => $rundownFileName, 'event_id' => $event->id]);
 

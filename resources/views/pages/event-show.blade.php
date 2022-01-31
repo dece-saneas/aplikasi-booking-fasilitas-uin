@@ -40,9 +40,9 @@
         <div class="card-body">
             {!! $event->description !!}
             <div class="my-4">
-                <a href="#" class="btn btn-sm btn-default"><i class="fas fa-download mr-2"></i>KTM</a>
-                <a href="#" class="btn btn-sm btn-default"><i class="fas fa-download mr-2"></i>Lampiran Acara</a>
-                <a href="#" class="btn btn-sm btn-default"><i class="fas fa-download mr-2"></i>Rundown Acara</a>
+                <a href="{{ asset('files') }}/{{ $event->ktm }}" class="btn btn-sm btn-default" download><i class="fas fa-download mr-2"></i>KTM</a>
+                <a href="{{ asset('files') }}/{{ $event->lampiran }}" class="btn btn-sm btn-default" download><i class="fas fa-download mr-2"></i>Lampiran Acara</a>
+                <a href="{{ asset('files') }}/{{ $event->rundown }}" class="btn btn-sm btn-default" download><i class="fas fa-download mr-2"></i>Rundown Acara</a>
             </div>
             <h6>Penyelenggara Acara :</h6>
             <h5><strong>{{ $event->user->name }}</strong></h5>

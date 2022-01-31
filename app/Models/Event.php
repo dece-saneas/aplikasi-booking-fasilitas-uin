@@ -40,4 +40,42 @@ class Event extends Model
     {
         return $this->belongsTo(FacilityUnit::class, 'facility_unit_id');
     }
+
+    /**
+     * Get the unitthat used on the event.
+     */
+    public function document()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    /**
+     * Get the user's first name.
+     * @param  string  $value
+     * @return string
+     */
+    public function getKtmAttribute()
+    {
+        return $this->document()->where('name', 'LIKE', '%ktm%')->pluck('name')->first();
+    }
+
+    /**
+     * Get the user's first name.
+     * @param  string  $value
+     * @return string
+     */
+    public function getLampiranAttribute()
+    {
+        return $this->document()->where('name', 'LIKE', '%lampiran%')->pluck('name')->first();
+    }
+
+    /**
+     * Get the user's first name.
+     * @param  string  $value
+     * @return string
+     */
+    public function getRundownAttribute()
+    {
+        return $this->document()->where('name', 'LIKE', '%rundown%')->pluck('name')->first();
+    }
 }
