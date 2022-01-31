@@ -59,7 +59,7 @@
             </div>
             @endif
             <div class="col text-right">
-                <a href="#" class="btn btn-primary"><i class="fas fa-file-download mr-2"></i>Download</a>
+                <a href="{{ route('download', $event->id) }}" class="btn btn-primary"><i class="fas fa-file-download mr-2"></i>Download</a>
             </div>
         </div>
         @endrole

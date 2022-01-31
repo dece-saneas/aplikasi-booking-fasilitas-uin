@@ -5,6 +5,7 @@ use App\Http\Controllers\AdviceController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FacilityUnitController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DownloadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,7 @@ Route::resource('fasilitas/units', FacilityUnitController::class)
 Route::resource('saran', AdviceController::class)
     ->middleware('guest')
     ->only(['create', 'store']);
+
+Route::get('download/{event}', [DownloadController::class, '__invoke'])
+    ->middleware('auth')
+    ->name('download');
